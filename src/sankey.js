@@ -129,7 +129,11 @@ export default function Sankey() {
       node.sourceLinks = [];
       node.targetLinks = [];
     }
-    const nodeById = new Map(nodes.map((d, i) => [id(d, i, nodes), d]));
+    const nodeById = new Map([
+      ...nodes.map((d, i) => [id(d, i, nodes), d]), // Here we search against the usual index.
+      ...nodes.map((d, i) => [d.id, d]) // Here, we also search against the ID string.
+    ]);
+
     for (const [i, link] of links.entries()) {
       link.index = i;
       let {source, target} = link;
